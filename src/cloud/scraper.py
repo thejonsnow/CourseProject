@@ -55,67 +55,83 @@ def hello_pubsub(event, context):
      twit_text = soup.body.find("script", attrs={"id" : "__NEXT_DATA__"}).string
      twit_json = json.loads(twit_text)
      _d = twit_json['props']['pageProps']['initialData']['message']
-     twit_id = _d['id']
-     twit_text = _d['body'].replace(',','')
-     twit_user = _d['user']['name']
-     twit_user_url = "https://stocktwits.com/"+twit_user
-     twit_created_at = _d['created_at']
+     if _d is not None:
+          print(_d)
+          twit_id = _d['id']
+          twit_text = _d['body'].replace(',','')
+          twit_user = _d['user']['name']
+          twit_user_url = "https://stocktwits.com/"+twit_user
+          twit_created_at = _d['created_at']
 
-     twit_username = _d['user']['username']
-     twit_user_avatar_url = _d['user']['avatar_url']
-     twit_user_join_date = _d['user']['join_date']
-     twit_user_followers = _d['user']['followers']
-     twit_user_following = _d['user']['following']
-     twit_user_like_count = _d['user']['like_count']
-     twit_user_subscribers_count = _d['user']['subscribers_count']
-     twit_user_subscribed_to_count = _d['user']['subscribed_to_count']
+          twit_username = _d['user']['username']
+          twit_user_avatar_url = _d['user']['avatar_url']
+          twit_user_join_date = _d['user']['join_date']
+          twit_user_followers = _d['user']['followers']
+          twit_user_following = _d['user']['following']
+          twit_user_like_count = _d['user']['like_count']
+          twit_user_subscribers_count = _d['user']['subscribers_count']
+          twit_user_subscribed_to_count = _d['user']['subscribed_to_count']
 
-     twit_symbol_title = _d['symbol'][0]['title']
-     twit_symbol_symbol = _d['symbol'][0]['symbol']
-     twit_symbol_exchange = _d['symbol'][0]['exchange']
-     twit_symbol_sector = _d['symbol'][0]['sector']
-     twit_symbol_industry = _d['symbol'][0]['industry']
-     twit_symbol_logo_url = _d['symbol'][0]['logo_url']
+          if len(_d['symbols']) > 0:
+               twit_symbol_title = _d['symbols'][0]['title']
+               twit_symbol_symbol = _d['symbols'][0]['symbol']
+               twit_symbol_exchange = _d['symbols'][0]['exchange']
+               twit_symbol_sector = _d['symbols'][0]['sector']
+               twit_symbol_industry = _d['symbols'][0]['industry']
+               twit_symbol_logo_url = _d['symbols'][0]['logo_url']
+          else:
+               twit_symbol_title = ''
+               twit_symbol_symbol = ''
+               twit_symbol_exchange = ''
+               twit_symbol_sector = ''
+               twit_symbol_industry = ''
+               twit_symbol_logo_url = ''
 
-     
-     twit_prices_symbol = _d['prices'][0]['symbol']
-     twit_prices_price = _d['prices'][0]['price']
-     twit_prices_current_price = _d['prices'][0]['current_price']
-     twit_prices_change_since_message = _d['prices'][0]['change_since_message']
-     twit_prices_percent_change_since_message = _d['prices'][0]['percent_change_since_message']
-     
-     twit_likes = _d['likes']['total']
+          if len(_d['prices']) > 0:
+               twit_prices_symbol = _d['prices'][0]['symbol']
+               twit_prices_price = _d['prices'][0]['price']
+               twit_prices_current_price = _d['prices'][0]['current_price']
+               twit_prices_change_since_message = _d['prices'][0]['change_since_message']
+               twit_prices_percent_change_since_message = _d['prices'][0]['percent_change_since_message']
+          else:
+               twit_prices_symbol = ''
+               twit_prices_price = ''
+               twit_prices_current_price = ''
+               twit_prices_change_since_message = ''
+               twit_prices_percent_change_since_message = ''
+               
+          twit_likes = _d['likes']['total']
 
-     twit_entities = _d['entities']['sentiment']['basic']
+          twit_entities = _d['entities']['sentiment']['basic']
 
-     data.append([
-          twit_id,
-          twit_text,
-          twit_user,
-          twit_user_url,
-          twit_created_at,
-          twit_username,
-          twit_user_avatar_url,
-          twit_user_join_date,
-          twit_user_followers,
-          twit_user_following,
-          twit_user_like_count,
-          twit_user_subscribers_count,
-          twit_user_subscribed_to_count,
-          twit_symbol_title,
-          twit_symbol_symbol,
-          twit_symbol_exchange,
-          twit_symbol_sector,
-          twit_symbol_industry,
-          twit_symbol_logo_url,
-          twit_prices_symbol,
-          twit_prices_price,
-          twit_prices_current_price,
-          twit_prices_change_since_message,
-          twit_prices_percent_change_since_message,
-          twit_likes,
-          twit_entities
-     ])
+          data.append([
+               twit_id,
+               twit_text,
+               twit_user,
+               twit_user_url,
+               twit_created_at,
+               twit_username,
+               twit_user_avatar_url,
+               twit_user_join_date,
+               twit_user_followers,
+               twit_user_following,
+               twit_user_like_count,
+               twit_user_subscribers_count,
+               twit_user_subscribed_to_count,
+               twit_symbol_title,
+               twit_symbol_symbol,
+               twit_symbol_exchange,
+               twit_symbol_sector,
+               twit_symbol_industry,
+               twit_symbol_logo_url,
+               twit_prices_symbol,
+               twit_prices_price,
+               twit_prices_current_price,
+               twit_prices_change_since_message,
+               twit_prices_percent_change_since_message,
+               twit_likes,
+               twit_entities
+          ])
 
     df = pd.DataFrame(data)
     storage_ref = 'example2.csv'
