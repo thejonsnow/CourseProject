@@ -1,0 +1,15 @@
+<html>    
+<body>
+    <p><center><h1> Results </h1></center></p>
+    {% for key,value in form_data.items() %}
+    <h2> {{key}}:</h2>
+    {% for x in value %}
+    <p style="margin: 0">{{x}}</p>
+    {% endfor %}
+    {% endfor %}
+    <a href= http://localhost:5000>
+        <p><center><button class="button">Go Back</button></center></p>
+    </a>
+</body>
+</html>
+    

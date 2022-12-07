@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+</head>
+<body>
+    <h1><center>StockTwits</center></h1>
+    <div id="Queryfield">
+        <form action="/data" method = "POST"><center>
+          <label for="uquery">Enter user query:</label><br>
+          <input type="text" id="uquery" name="uquery"><br><br>
+          <input type = "submit" value = "Search" id="Search" ><br>
+        </center></form>
+    </div>    
+</body>
+</html>
