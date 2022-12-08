@@ -26,14 +26,13 @@ def hello_world(request):
     request_json = request.get_json()
     algo = SearchAlgorithm()
     fs = gcsfs.GCSFileSystem(project='cs410-7733e')
-    with fs.open('gs://cs410-7733e.appspot.com/example.csv') as f:
+    with fs.open('gs://cs410-7733e.appspot.com/combo.csv') as f:
         df = pd.read_csv(f)
-        print(request_json["query"])
         # if "query" in request_json:
         query = request_json["query"]
         algo.update_ranker(df.twit_text, k1=1.5, b=0.75, epsilon=0.25)
         df["score"] = algo.get_scores(query)
-        TOP_N = 3
+        TOP_N = 15
         search_result = df.sort_values(by=['score'], ascending=False)[:TOP_N]
         array_of_json = json.loads(search_result.to_json(orient="records"))
         indented_str = json.dumps(array_of_json, indent=4)
