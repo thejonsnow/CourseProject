@@ -1,4 +1,4 @@
-# StockTwits search engine
+# StockTwits Search Engine Team-RSJB CS410
 
 # Project Video
 https://drive.google.com/file/d/1-M08jBvJin0lV7XjcFDc5k3yOELH6CJ7/view
