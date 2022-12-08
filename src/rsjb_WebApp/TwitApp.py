@@ -15,7 +15,7 @@ def home():
 @app.route('/data/', methods = ['POST', 'GET'])
 def data():
     if request.method == 'GET':
-        return f"The URL /data is accessed directly. Try going to '/form' to submit form"
+        return f"The URL /data is accessed directly. Try going to '/' to enter search query"
     if request.method == 'POST':
         form_data = request.form.get('uquery')
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./cred.json"
