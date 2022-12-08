@@ -72,7 +72,7 @@ def hello_pubsub(event, context):
           twit_user_subscribers_count = _d['user']['subscribers_count']
           twit_user_subscribed_to_count = _d['user']['subscribed_to_count']
 
-          if len(_d['symbols']) > 0:
+          if 'symbols' in _d and len(_d['symbols']) > 0:
                twit_symbol_title = _d['symbols'][0]['title']
                twit_symbol_symbol = _d['symbols'][0]['symbol']
                twit_symbol_exchange = _d['symbols'][0]['exchange']
@@ -87,7 +87,7 @@ def hello_pubsub(event, context):
                twit_symbol_industry = ''
                twit_symbol_logo_url = ''
 
-          if len(_d['prices']) > 0:
+          if 'prices' in _d and len(_d['prices']) > 0:
                twit_prices_symbol = _d['prices'][0]['symbol']
                twit_prices_price = _d['prices'][0]['price']
                twit_prices_current_price = _d['prices'][0]['current_price']
@@ -102,7 +102,7 @@ def hello_pubsub(event, context):
                
           twit_likes = _d['likes']['total']
 
-          twit_entities = _d['entities']['sentiment']['basic']
+          twit_entities = _d['entities']['sentiment']['basic'] if 'entities' in _d else ''
 
           data.append([
                twit_id,
